@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php if($block->isEnabled()):?>
+	<?php foreach ($block->getTypePersonOptions() as $opt): ?>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="field typeperson<?php if ($block->isRequired()) echo ' required'; ?>">
+            	<label class="label" for="typeperson_male<?php echo $block->escapeHtml($opt->getValue()) ?>">
+            		<span>
+            			<?php /* @escapeNotVerified */ echo $opt->getLabel() ?>
+        			</span>
+        		</label>    
+                <div class="control">
+                    <input 
+                    type="radio" 
+                    id="typeperson_male<?php echo $block->escapeHtml($opt->getValue()) ?>" 
+                    name="<?php /* @escapeNotVerified */ echo $block->getFieldName('typeperson')?>" 
+                    value="<?php echo $block->escapeHtml($opt->getValue()) ?>" 
+                    title="<?php /* @escapeNotVerified */ echo $opt->getLabel() ?>"
+                    class="input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('typeperson') ?>" <?php /* @escapeNotVerified */ echo $block->getFieldParams() ?> <?php if ($block->isRequired()) echo ' data-validate="{required:true}"' ?>>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
+    
+<script type="text/javascript">
+	require(['jquery','Jbp_Customer/js/jqueryMask'], function($){
+		
+		$('input[name="typeperson"]').change(function(){
+			var val = $(this).val();
+			if(val == 1){
+				showTypePersonLegal();
+			}else{
+				showTypePersonNatural();
+			}
+		});
+
+
+		function showTypePersonNatural()
+		{
+			$('input[name="firstname"]').attr('placeholder','<?php echo __('Nome') ?>');
+			$('input[name="lastname"]').attr('placeholder','<?php echo __('Sobrenome') ?>');
+			$('input[name="taxvat"]').attr('placeholder','<?php echo __('CPF') ?>');
+			$('input[name="rg_stateenrollment"]').attr('placeholder','<?php echo __('RG') ?>');
+			$('input[name="dob"], select[name="gender"], .customer-dob').show();
+			$('input[name="taxvat"]').mask('999.999.999-99');
+		}
+
+		function showTypePersonLegal()
+		{
+			$('input[name="firstname"]').attr('placeholder','<?php echo __('Razão Social') ?>');
+			$('input[name="lastname"]').attr('placeholder','<?php echo __('Nome Fantasia') ?>');
+			$('input[name="taxvat"]').attr('placeholder','<?php echo __('CNPJ') ?>');
+			$('input[name="rg_stateenrollment"]').attr('placeholder','<?php echo __('Inscrição Estadual') ?>');
+			$('input[name="dob"], select[name="gender"], .customer-dob').hide();
+			$('input[name="taxvat"]').mask('99.999.999/9999-99');
+		}
+		
+	});
+</script>

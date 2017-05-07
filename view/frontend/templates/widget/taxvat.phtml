@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="field taxvat<?php if ($block->isRequired()) echo ' required'; ?>">    
+        <div class="control">
+            <input 
+            type="text" 
+            placeholder="<?php /* @escapeNotVerified */ echo __('Tax/VAT number') ?>" 
+            id="<?php /* @escapeNotVerified */ echo $block->getFieldId('taxvat')?>" 
+            name="<?php /* @escapeNotVerified */ echo $block->getFieldName('taxvat')?>" 
+            value="<?php echo $block->escapeHtml($block->getTaxvat()) ?>" 
+            title="<?php /* @escapeNotVerified */ echo __('Tax/VAT number') ?>" 
+            class="input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('taxvat') ?>" <?php /* @escapeNotVerified */ echo $block->getFieldParams() ?> <?php if ($block->isRequired()) echo ' data-validate="{required:true}"' ?>>
+        </div>
+    </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    <div class="field rg_inscricao">    
+        <div class="control">
+            <input 
+            type="text" 
+            placeholder="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
+            id="rg_inscricao" 
+            name="<?php /* @escapeNotVerified */ echo $block->getFieldName('rg_stateenrollment')?>" 
+            value="<?php echo $block->escapeHtml($block->getRgStateenrollment()) ?>" 
+            title="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
+            class="input-text">
+        </div>
+    </div>
+</div>
+    
