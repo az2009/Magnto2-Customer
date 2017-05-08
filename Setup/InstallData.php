@@ -58,9 +58,8 @@ class InstallData implements InstallDataInterface
             'label' => __('Type Person'),
             'input' => 'select',
             'source' => 'Jbp\Customer\Model\Eav\Entity\Attribute\Source\TypePerson',
-            'required' => false,
+            'required' => true,
             'visible' => true,
-            'user_defined' => true,
             'sort_order' => 1000,
             'position' => 1000,
             'system' => 0

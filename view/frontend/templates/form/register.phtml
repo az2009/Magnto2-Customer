@@ -93,6 +93,10 @@
                                      value="<?php echo $block->escapeHtml($block->getFormData()->getPostcode()) ?>" 
                                      title="<?php /* @escapeNotVerified */ echo __('Zip/Postal Code') ?>" 
                                      id="zip" 
+                                     onpaste="return false;"
+                                     onCopy="return false"
+                                     onDrag="return false"
+                                     autocomplete=off
                                      class="input-text validate-zip-international <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('postcode') ?>">
                                 </div>
                             </div>
@@ -103,20 +107,22 @@
                                 	                                	
                                     <div class="nested">
                                     	
-                                    	<div class="field additional col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        	<input 
-                                        	type="text" 
-                                        	placeholder="<?php echo $_helper->getLabelAddressByRow(1); ?>" 
-                                        	name="street[]" 
-                                        	value="<?php echo $block->escapeHtml($block->getFormData()->getStreet(0)) ?>" 
-                                        	title="<?php /* @escapeNotVerified */ echo __('Street Address') ?>" 
-                                        	id="street_1" 
-                                        	class="input-text <?php /* @escapeNotVerified */ echo $_streetValidationClass ?>">
+                                    	<div class="field required col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    		<div class="control">
+                                            	<input 
+                                            	type="text" 
+                                            	placeholder="<?php echo $_helper->getLabelAddressByRow(1); ?>" 
+                                            	name="street[]" 
+                                            	value="<?php echo $block->escapeHtml($block->getFormData()->getStreet(0)) ?>" 
+                                            	title="<?php /* @escapeNotVerified */ echo __('Street Address') ?>" 
+                                            	id="street_1" 
+                                            	class="input-text <?php /* @escapeNotVerified */ echo $_streetValidationClass ?>">
+                                        	</div>
     									</div>
     									
                                         <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
                                         <?php for ($_i = 2, $_n = $this->helper('Magento\Customer\Helper\Address')->getStreetLines(); $_i <= $_n; $_i++): ?>
-                                            <div class="field additional required col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div class="field required col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                 <div class="control">
                                                 	<input 
                                                 	 type="text"

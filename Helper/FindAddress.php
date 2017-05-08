@@ -2,10 +2,23 @@
 
 namespace Jbp\Customer\Helper;
 
-use Jbp\BxSlider\Helper\Data;
+use Magento\Framework\App\Helper\AbstractHelper;
 
-class FindAddress extends Data 
+class FindAddress extends AbstractHelper
 {
+    
+    protected $_region;
+    
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
+        \Magento\Directory\Model\RegionFactory $region
+    ) {
+        
+        $this->_region = $region->create();
+        
+        parent::__construct($context);
+        
+    }
     
     protected $_url = 'http://m.correios.com.br/movel/buscaCepConfirma.do';
     
@@ -23,7 +36,6 @@ class FindAddress extends Data
         
         @\phpQuery::newDocumentHTML($body, $charset = 'utf-8');
         
-        
         $ufCity = $this->_prepareStateCity(trim(pq('.caixacampobranco .respostadestaque:eq(2)')->html()));
         
         $city = $ufCity[0];
@@ -37,6 +49,10 @@ class FindAddress extends Data
             'uf'            => trim($uf),
             'cep'           => trim(pq('.caixacampobranco .respostadestaque:eq(3)')->html())
         );
+        
+        $regionId   = $this->_region->loadByCode($data['uf'], 'BR')->getId();
+        
+        $data['uf'] = $regionId;
         
         if(empty($data['logradouro'])){
             return false;
