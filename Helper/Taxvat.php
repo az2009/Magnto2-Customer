@@ -23,7 +23,7 @@ class Taxvat extends Data
      * @access protected
      * @return string CPF, CNPJ ou false
      */
-    protected function verifica_cpf_cnpj () {
+    public function verifica_cpf_cnpj () {
         // Verifica CPF
         if ( strlen( $this->valor ) === 11 ) {
             return 'CPF';

@@ -8,12 +8,9 @@
   </head>
   
   <body>
-    <referenceBlock name="customer_form_register">
+    <referenceBlock name="customer_edit">
     	<action method="setTemplate">
-    		<argument name="template" xsi:type="string">Jbp_Customer::form/register.phtml</argument>    		
-    	</action>
-    	<action method="setShowAddressFields">
-    		<argument xsi:type="string">1</argument>
+    		<argument name="template" xsi:type="string">Jbp_Customer::form/edit.phtml</argument>    		
     	</action>
     </referenceBlock>
   </body>

@@ -42,6 +42,22 @@
 						
                     	<?php echo $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')->setObject($block->getFormData())->setForceUseCustomerAttributes(true)->toHtml() ?>
                         
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 reset-padding">
+                        	<div class="field telephone">
+                                <div class="control">
+                                    <input type="text" name="telephone" placeholder="<?php echo __('Phone Number') ?>" id="telephone" value="<?php echo $block->escapeHtml($block->getFormData()->getTelephone()) ?>" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" class="input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('telephone') ?>">
+                                </div>
+                            </div>                            
+                        </div>
+                        
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 reset-padding">
+                        	<div class="field cellphone">
+                                <div class="control">
+                                    <input type="text" name="cellphone" placeholder="<?php echo __('Cell Phone Number') ?>" id="cellphone" value="<?php echo $block->escapeHtml($block->getFormData()->getTelephone()) ?>" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" class="input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('cellphone') ?>">
+                                </div>
+                            </div>                            
+                        </div>
+                        
                         <?php $_dob = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob') ?>
                         <?php if ($_dob->isEnabled()): ?>
                         	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

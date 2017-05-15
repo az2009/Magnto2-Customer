@@ -3,5 +3,8 @@
   <preference for="Magento\Customer\Block\Widget\Dob" type="Jbp\Customer\Block\Widget\Dob" />
   <preference for="Magento\Customer\Block\Widget\Taxvat" type="Jbp\Customer\Block\Widget\Taxvat" />
   <preference for="Magento\Customer\Block\Widget\Gender" type="Jbp\Customer\Block\Widget\Gender" />
-  <preference for="Magento\Customer\Block\Widget\Name" type="Jbp\Customer\Block\Widget\Name" />
+  <preference for="Magento\Customer\Block\Widget\Name" type="Jbp\Customer\Block\Widget\Name" />  
+  <type name="Magento\Customer\Model\Metadata\Form\Date">
+      <plugin name="beforeValidateValue" type="Jbp\Customer\Plugin\CustomerDatePlugin" sortOrder="1"/>
+  </type>	  	  
 </config>
