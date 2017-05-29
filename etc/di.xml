@@ -3,5 +3,11 @@
   <preference for="Magento\Customer\Block\Widget\Dob" type="Jbp\Customer\Block\Widget\Dob" />
   <preference for="Magento\Customer\Block\Widget\Taxvat" type="Jbp\Customer\Block\Widget\Taxvat" />
   <preference for="Magento\Customer\Block\Widget\Gender" type="Jbp\Customer\Block\Widget\Gender" />
-  <preference for="Magento\Customer\Block\Widget\Name" type="Jbp\Customer\Block\Widget\Name" />    	  	  
+  <preference for="Magento\Customer\Block\Widget\Name" type="Jbp\Customer\Block\Widget\Name" />
+  <type name="Magento\Checkout\Block\Checkout\AttributeMerger">
+   	<plugin name="shippingAddress" type="Jbp\Customer\Plugin\Checkout\Block\AttributeMerger\Plugin"/>
+  </type>
+  <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+   	<plugin name="removeComponentCompany" type="Jbp\Customer\Plugin\Checkout\Block\LayoutProcessor\Plugin"/>
+  </type>
 </config>

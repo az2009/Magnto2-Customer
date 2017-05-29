@@ -36,6 +36,7 @@ $fieldCssClass = 'field date field-' . $block->getHtmlId();
 $fieldCssClass .= $block->isRequired() ? ' required' : '';
 ?>
 <div class="<?php /* @escapeNotVerified */ echo $fieldCssClass; ?>">
+	<label class="label" for="<?php echo $block->getHtmlId()?>"><span><?php /* @escapeNotVerified */ echo $block->getLabel() ?></span></label>
     <div class="control customer-dob">
         <?php echo $block->getFieldHtml(); ?>
         <?php if ($_message = $block->getAdditionalDescription()) : ?>

@@ -3,7 +3,6 @@
 
   <head>
   	<css src="Jbp_Customer::css/customer.css" />
-  	<css src="Jbp_Customer::css/grid.css" />
   	<script src="Jbp_Customer::js/customer.js" />
   </head>
   

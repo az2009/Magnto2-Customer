@@ -12,7 +12,8 @@ require([
 	/*Postcode*/
 		$('input[name="postcode"]').mask('99999-999');
 	
-	
+		$('input[name="address[6][postcode]"]').mask('99999-999');
+		
 		$('body').on('focusout','input[name="postcode"]',function(){		
 			var postcode = $(this).val();
 			var postcode = $(this);

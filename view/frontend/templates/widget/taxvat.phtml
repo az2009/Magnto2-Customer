@@ -7,33 +7,32 @@
 // @codingStandardsIgnoreFile
 
 ?>
-<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <div class="field taxvat<?php if ($block->isRequired()) echo ' required'; ?>">    
-        <div class="control">
-            <input 
-            type="text" 
-            placeholder="<?php /* @escapeNotVerified */ echo __('Tax/VAT number') ?>" 
-            id="<?php /* @escapeNotVerified */ echo $block->getFieldId('taxvat')?>" 
-            name="<?php /* @escapeNotVerified */ echo $block->getFieldName('taxvat')?>" 
-            value="<?php echo $block->escapeHtml($block->getTaxvat()) ?>" 
-            title="<?php /* @escapeNotVerified */ echo __('CPF') ?>" 
-            class=" validate-taxvat input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('taxvat') ?>" <?php /* @escapeNotVerified */ echo $block->getFieldParams() ?> <?php if ($block->isRequired()) echo ' data-validate="{required:true}"' ?>>
-        </div>
+
+<div class="field taxvat<?php if ($block->isRequired()) echo ' required'; ?>">
+	<label class="label" for="<?php /* @escapeNotVerified */ echo $block->getFieldId('taxvat')?>"><span><?php /* @escapeNotVerified */ echo __('Tax/VAT number') ?></span></label>    
+    <div class="control">
+        <input 
+        type="text" 
+        placeholder="<?php /* @escapeNotVerified */ echo __('Tax/VAT number') ?>" 
+        id="<?php /* @escapeNotVerified */ echo $block->getFieldId('taxvat')?>" 
+        name="<?php /* @escapeNotVerified */ echo $block->getFieldName('taxvat')?>" 
+        value="<?php echo $block->escapeHtml($block->getTaxvat()) ?>" 
+        title="<?php /* @escapeNotVerified */ echo __('CPF') ?>" 
+        class=" validate-taxvat input-text <?php /* @escapeNotVerified */ echo $this->helper('Magento\Customer\Helper\Address')->getAttributeValidationClass('taxvat') ?>" <?php /* @escapeNotVerified */ echo $block->getFieldParams() ?> <?php if ($block->isRequired()) echo ' data-validate="{required:true}"' ?>>
     </div>
 </div>
-<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-    <div class="field rg_stateenrollment">    
-        <div class="control">
-            <input 
-            type="text" 
-            placeholder="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
-            id="rg_stateenrollment" 
-            name="<?php /* @escapeNotVerified */ echo $block->getFieldName('rg_stateenrollment')?>" 
-            value="<?php echo $block->escapeHtml($block->getRgStateenrollment()) ?>" 
-            title="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
-            class="input-text"
-            >
-        </div>
+
+<div class="field rg_stateenrollment">
+	<label class="label" for="<?php /* @escapeNotVerified */ echo $block->getFieldId('RG')?>"><span><?php /* @escapeNotVerified */ echo __('RG') ?></span></label>    
+    <div class="control">
+        <input 
+        type="text" 
+        placeholder="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
+        id="rg_stateenrollment" 
+        name="<?php /* @escapeNotVerified */ echo $block->getFieldName('rg_stateenrollment')?>" 
+        value="<?php echo $block->escapeHtml($block->getRgStateenrollment()) ?>" 
+        title="<?php /* @escapeNotVerified */ echo __('RG') ?>" 
+        class="input-text"
+        >
     </div>
 </div>
-    
