@@ -25,7 +25,6 @@ class BeforeCustomer implements ObserverInterface
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Jbp\Customer\Helper\Taxvat $taxvat,
         \Psr\Log\LoggerInterface $logger,
-        \Magento\Customer\Model\CustomerFactory $customer,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customer
     ) {
