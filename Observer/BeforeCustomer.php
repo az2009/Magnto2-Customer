@@ -21,29 +21,47 @@ class BeforeCustomer implements ObserverInterface
     
     protected $_storeManager = null;
     
+    protected $_scopeConfig = null;
+    
     public function __construct(
         \Magento\Framework\Message\ManagerInterface $messageManager,
         \Jbp\Customer\Helper\Taxvat $taxvat,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customer
     ) {
         
-        $this->_storeManager = $storeManager;
-        
-        $this->_taxvat = $taxvat;
-        
         $this->_messageManager = $messageManager;
-        
-        $this->_logger = $logger;
         
         $this->_customer = $customer->create();
         
+        $this->_storeManager = $storeManager;
+        
+        $this->_scopeConfig = $scopeConfig;
+        
+        $this->_taxvat = $taxvat;
+        
+        $this->_logger = $logger;
+
     }
     
     public function execute(EventObserver $observer)
     {
+        
+        $isEnabled = (int)$this->_scopeConfig->getValue('jbp_configuration/general/active');
+        
+        if (!$isEnabled) {
+            return $this;
+        }
+        
         $taxvat = $observer->getEvent()->getDataObject()->getTaxvat();
+        
+        $gender = $observer->getEvent()->getDataObject()->getGender();
+        
+        $dob = $observer->getEvent()->getDataObject()->getDob();
+        
+        $typeperson = $observer->getEvent()->getDataObject()->getTypeperson();
         
         $rgStateenrollment = $observer->getEvent()->getDataObject()->getData('rg_stateenrollment');
         
@@ -61,20 +79,78 @@ class BeforeCustomer implements ObserverInterface
             
         }
         
+        $this->_isRequiredDob($dob, $typeperson);
+        
+        $this->_isRequiredGender($gender, $typeperson);
+        
         return $this;
         
     }
     
-    protected function _isRequiredSex($typePerson)
+    /**
+     * retorn as configurações
+     * @param unknown $path
+     * @return mixed
+     */
+    protected function _getConfig($path)
     {
+        $config = $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $config;
+    }
+    
+    /**
+     * retorna se a genero e requerido
+     * @param unknown $gender
+     * @param unknown $typeperson
+     * @throws \Exception
+     * @return boolean
+     */
+    protected function _isRequiredGender($gender, $typeperson)
+    {
+        if (($this->_getConfig('jbp_configuration/general/gender_show') == 'req' 
+                && in_array($gender, array(1,2,3)) 
+            ) || $this->_getConfig('jbp_configuration/general/gender_show') == 'opt'
+              || $typeperson == 1) {
+            return true;
+        }
+        
+        
+        $this->_messageManager->addNotice(
+            $this->_getMessage(
+                'genderRequired'));
+        
+        throw new \Exception($this->_getMessage(
+            'genderRequired'));
         
     }
     
-    protected function _isRequiredDob($typePerson)
+    /**
+     * retorna se a data de nascimento é requerido
+     * @param unknown $typePerson
+     */
+    protected function _isRequiredDob($dob, $typeperson)
     {
+        if (($this->_getConfig('jbp_configuration/general/dob_show') == 'req'
+            && !empty($dob)) 
+              || $this->_getConfig('jbp_configuration/general/gender_show') == 'opt'
+              || $typeperson == 1) {
+                return true;
+        }
         
+        $this->_messageManager->addNotice(
+            $this->_getMessage(
+                'dobRequired'));
+        
+        throw new \Exception($this->_getMessage(
+            'dobRequired'));
     }
     
+    /**
+     * verifica se o taxvat é válido
+     * @param unknown $taxvat
+     * @throws \Exception
+     * @return string
+     */
     protected function _isValidTaxVat($taxvat)
     {
         $this->_taxvat->setTaxvat($taxvat);
@@ -96,6 +172,14 @@ class BeforeCustomer implements ObserverInterface
         
     }
     
+    /**
+     * verifica se usuário j[a existe através do taxvat
+     * @param unknown $taxvat
+     * @param unknown $rgStateenrollment
+     * @param unknown $email
+     * @throws \Exception
+     * @return \Jbp\Customer\Observer\BeforeCustomer
+     */
     protected function _isTaxvatExists($taxvat, $rgStateenrollment,  $email)
     {
         $collection = $this->_customer
@@ -123,6 +207,11 @@ class BeforeCustomer implements ObserverInterface
         return $this;
     }
     
+    /**
+     * retorna label
+     * @param unknown $taxvat
+     * @return \Magento\Framework\Phrase|unknown
+     */
     protected function _getTypeDocument($taxvat)
     {
         if ($taxvat === false) {
@@ -133,9 +222,18 @@ class BeforeCustomer implements ObserverInterface
         
     }
     
-    protected function _getMessage($type, $taxvat)
+    /**
+     * retorna a messagem caso usuário já exista
+     * @param unknown $type
+     * @param unknown $taxvat
+     * @return \Magento\Framework\Phrase
+     */
+    protected function _getMessage($type = null, $taxvat = null)
     {
-        $taxvat= $this->_getTypeDocument($taxvat);
+        
+        if ($taxvat) {
+            $taxvat= $this->_getTypeDocument($taxvat);
+        }
         
         switch ($type) {
             case 'taxvatExists':
@@ -144,6 +242,14 @@ class BeforeCustomer implements ObserverInterface
             
             case 'taxvatInvalid':
                 return __("Error {$taxvat} invalid");
+            break;
+            
+            case 'genderRequired':
+                return __("Gender Required");
+            break;
+            
+            case 'dobRequired':
+                return __("Dob Required");
             break;
         }
         
